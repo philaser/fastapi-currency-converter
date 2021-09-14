@@ -2,11 +2,11 @@ import aiohttp
 import logging
 
 logger = logging.getLogger(__name__)
-# format = '[%(asctime)s]{%(pathname)s:%(lineno)d}%(levelname)s- %(message)s'
-# logging.basicConfig(format=format, level=logging.INFO,
-#                         datefmt="%H:%M:%S",
-#                         handlers=[logging.FileHandler("example1.log"),
-#                   logging.StreamHandler()])
+format = '[%(asctime)s]{%(name)s:%(lineno)d}%(levelname)s- %(message)s'
+logging.basicConfig(format=format, level=logging.INFO,
+                        datefmt="%H:%M:%S",
+                        handlers=[logging.FileHandler("example1.log"),
+                  logging.StreamHandler()])
 
 ACCESS_KEY = '165850929f3969f2e866'
 URL = 'https://free.currconv.com/api/v7/convert'
@@ -36,10 +36,9 @@ async def convertCurrency(from_currency, to_currency, amount):
                         'status': 'FAILURE',
                         'message': message
                     }
-                    logger.info(message)
+                    logger.exception(message)
                     return error
     except Exception as e:
-        print(e)
         message = f"Conversion failed due to ERROR: {e}"
         error = {
                 'status': 'FAILURE',

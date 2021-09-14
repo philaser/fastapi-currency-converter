@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException
 
-from helpers import convertCurrency
-from schemas import conversionData
+from app.helpers import convertCurrency
+from app.schemas import conversionData
 
 app = FastAPI()
 
