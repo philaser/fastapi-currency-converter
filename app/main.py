@@ -1,13 +1,14 @@
+# main app with app initialization and routes
 from fastapi import FastAPI, HTTPException
 
 from app.helpers import convertCurrency
-from app.schemas import conversionData
+from app.schemas import ConversionData
 
 app = FastAPI()
 
 
-@app.get("/api/v1/convert", response_model= conversionData, response_model_exclude_unset=True)
-async def status_handler(from_currency: str, to_currency: str, amount: float):
+@app.get("/api/v1/convert", response_model= ConversionData, response_model_exclude_unset=True)
+async def converter(from_currency: str, to_currency: str, amount: float):
     data = await convertCurrency(from_currency, to_currency, amount)
     if data['status'] == 'SUCCESS':
         return data

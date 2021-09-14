@@ -1,3 +1,5 @@
+# helper functions are stored here to declutter the main app
+import os
 import aiohttp
 import logging
 
@@ -5,14 +7,18 @@ logger = logging.getLogger(__name__)
 format = '[%(asctime)s]{%(name)s:%(lineno)d}%(levelname)s- %(message)s'
 logging.basicConfig(format=format, level=logging.INFO,
                         datefmt="%H:%M:%S",
-                        handlers=[logging.FileHandler("example1.log"),
+                        handlers=[logging.FileHandler("logs.log"),
                   logging.StreamHandler()])
 
-ACCESS_KEY = '165850929f3969f2e866'
+ACCESS_KEY = os.getenv("ACCESS_KEY", "165850929f3969f2e866")
 URL = 'https://free.currconv.com/api/v7/convert'
 
 
 async def convertCurrency(from_currency, to_currency, amount):
+    """
+    handles all conversion logic. Takes a new conversion rate
+    and multiplies by the amount.
+    """
     currencies = f'{from_currency}_{to_currency}'
     queries = f'q={currencies}&compact=ultra&apiKey={ACCESS_KEY}'
 
